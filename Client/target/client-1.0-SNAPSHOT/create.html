@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Aligned Form</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<h2>Create A Preson Record</h2>
+
+
+<style>
+h1 {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+
+  form {
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto;    /* Center the form horizontally */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #85c1e9 ;
+  }
+  label {
+    display: inline-block;
+    width: 120px; /* Adjust to the longest label width */
+    text-align: right;
+    margin-right: 10px;
+  }
+  input[type="text"] {
+    width: 200px; /* Adjust as needed */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+  input[type="submit"] {
+    margin-left: 130px; /* Align with the input fields */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .form-row {
+    margin-bottom: 15px;
+  }
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-left: 130px; /* Align with input fields */
+  }
+  body {
+  background-color: #85c1e9 ;
+}
+</style>
+</head>
+<body >
+
+<form id="myForm">
+  <div class="form-row">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" value="">
+    <span id="firstNameError" class="error-message"></span>
+  </div>
+  <div class="form-row">
+    <label for="middleName">Middle Name:</label>
+    <input type="text" id="middleName" name="middleName" value="">
+    <span id="middleNameError" class="error-message"></span>
+  </div>
+  <div class="form-row">
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" value="">
+    <span id="lastNameError" class="error-message"></span>
+  </div>
+  <div class="form-row">
+    <label for="age">Age:</label>
+    <input type="text" id="age" name="age" value="">
+     <span id="ageError" class="error-message"></span>
+  </div>
+  <div class="form-row">
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" name="gender" value="">
+    <span id="genderError" class="error-message"></span>
+  </div>
+  <div class="form-row">
+    <input type="submit" value="Submit">
+  </div>
+</form>
+
+<div id="response"></div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(event) {
+  let hasErrors = false;
+
+  // Reset all error messages
+  document.querySelectorAll('.error-message').forEach(node => node.textContent = '');
+
+  const firstName = document.getElementById("firstName").value.trim();
+  const middleName = document.getElementById("middleName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const age = document.getElementById("age").value.trim();
+  const gender = document.getElementById("gender").value.trim();
+
+  if (firstName === "") {
+    document.getElementById("firstNameError").textContent = "First Name is required";
+    hasErrors = true;
+  }
+
+  if (lastName === "") {
+    document.getElementById("lastNameError").textContent = "Last Name is required";
+    hasErrors = true;
+  }
+
+  if (age === "") {
+    document.getElementById("ageError").textContent = "Age is required";
+    hasErrors = true;
+  } else if (isNaN(age) || parseInt(age) <= 0) {
+    document.getElementById("ageError").textContent = "Age must be a positive number";
+    hasErrors = true;
+  }
+
+  if (gender === "") {
+    document.getElementById("genderError").textContent = "Gender is required";
+    hasErrors = true;
+  }
+
+  if (hasErrors) {
+    event.preventDefault(); // Prevent form submission if there are errors
+  }
+});
+
+$(document).ready(function() {
+  $("#myForm").submit(function(event) {
+    event.preventDefault();
+
+    var formData = {
+      firstName: $("#firstName").val(),
+	  middleName: $("#middleName").val(),
+	  lastName: $("#lastName").val(),
+	  age: $("#age").val(),
+      gender: $("#gender").val()
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "http://localhost:8081/PersonalInformationRestAPI-0.0.1-SNAPSHOT/user/api/create",
+      data: JSON.stringify(formData),
+      contentType: "application/json; charset=utf8",
+      dataType: "text",
+      success: function(response) {
+        $("#response").html("<b>Success:</b> " + JSON.stringify(response));
+      },
+      error: function(xhr, status, error) {
+        $("#response").html("<b>Error:</b> " + xhr.responseText);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Information Portal</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Title styling */
+        .page-title {
+            text-align: center;
+            padding: 20px;
+            background-color: #c74326;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        /* Tab styling */
+        .tab-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the start (left) */
+            margin: 20px auto;
+            width: 600px; /* Increased width for better layout */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .tab-header {
+            display: flex; /* Horizontal layout for tabs */
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 0; /* Remove default margin-bottom */
+            width: 100%;
+        }
+
+        .tab-header button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            background-color: #c74326;
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tab-header button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-header button.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .tab-content {
+            padding: 20px;
+            width: 100%;
+        }
+
+        .tab-content .tab-pane {
+            display: none;
+        }
+
+        .tab-content .tab-pane.active {
+            display: block;
+        }
+
+        /* Style for iframe */
+        .tab-content iframe {
+            width: 100%;
+            height: 1000px;
+            border: none;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to switch tabs
+            function switchTab(tabId) {
+                // Hide all tab content
+                $('.tab-content .tab-pane').removeClass('active');
+                // Show the selected tab content
+                $('#' + tabId).addClass('active');
+                // Update active tab button
+                $('.tab-header button').removeClass('active');
+                $('[data-tab="' + tabId + '"]').addClass('active');
+
+                // Load content into iframe
+                if (tabId === 'tab1' || tabId === 'tab2') {
+                    var targetIframe = $('#' + tabId + ' iframe')[0];
+                    if (targetIframe.src === "" || targetIframe.src === window.location.href) {
+                        targetIframe.src = tabId + ".html";
+                    }
+                }
+            }
+
+            // Event listener for tab clicks
+            $('.tab-header button').click(function () {
+                var tab = $(this).data('tab');
+                switchTab(tab);
+            });
+
+            // Initialize the first tab as active on page load
+            switchTab('tab1');
+        });
+    </script>
+</head>
+<body style="background-color: #85c1e9 ;">
+
+    <h1 class="page-title">Personal Information Portal</h1>
+ 
+        <div class="tab-header">
+            <button class="active" data-tab="tab1">Create a Person Record</button>
+            <button data-tab="tab2">Get Person Details</button>
+        </div>
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane active">
+                <iframe src="create.html" title="Create a Person Record"></iframe>
+            </div>
+            <div id="tab2" class="tab-pane">
+                <iframe src="get.html" title="Get Person Details"></iframe>
+            </div>
+        </div>
+    
+    <script>
+       
+    </script>
+</body>
+</html>
