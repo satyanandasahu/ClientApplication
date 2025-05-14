@@ -5,4 +5,11 @@ create HTML page is using jquery for post method, check the URL in ajax call. Ma
 run the maven command "mvn clean install" to generate the war.
 Deploy and test.
 
-Note: Both the PersonalInformationRestAPI & ClientApplication should be deployed in same Tomcat.
+Note: 
+1.  Both the PersonalInformationRestAPI & ClientApplication should be deployed in same Tomcat.
+2.  To better understand this project this video on youtube link: 
+    1.	https://youtu.be/o8IIkcmXt6Q  (Docker)
+    2.	https://youtu.be/J2GZhlhVKt4 (Creating Client Application (UI) And Deploying )
+    3.	https://youtu.be/AL4Z3_FpjMY (Spring Boot Application deployment on embedded tomcat & external tomcat )
+    4.	https://youtu.be/7kptCL3oeyw (Rest API Integration with Service Layer & Test using SOAP UI )
+
